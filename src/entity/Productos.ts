@@ -8,4 +8,8 @@ export class Productos {
     nombre: string;
     @Column()
     precio: number;
+    @Column()
+    fechaCreacion: Date;
+    @Column()
+    fechaEdicion: Date;
 }

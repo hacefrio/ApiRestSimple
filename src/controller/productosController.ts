@@ -9,11 +9,18 @@ export class productosController{
             const {nombre,precio} = req.body;
             const producto= new Productos();
             //console.log(nombre,precio);
-            producto.nombre=nombre;
-            producto.precio=precio;
-            await AppDataSource.getRepository(Productos).save(producto);
-            return res.status(200).json({message:producto});
-
+            if(nombre!=""){
+                return res.status(400).json({message:"El nombre no puede estar vacio"});
+            }else 
+            if(precio<=0){
+                return res.status(400).json({message:"El precio debe ser mayor a 0"});
+            }else{
+                producto.nombre=nombre;
+                producto.precio=precio;
+                producto.fechaCreacion=new Date();
+                await AppDataSource.getRepository(Productos).save(producto);
+                return res.status(200).json({message:producto});
+            }
         }catch(error){return res.status(400).json({message:error.message})};
     }
 
@@ -43,6 +50,7 @@ export class productosController{
         if (producto) {
             producto.nombre = nombre || producto.nombre;
             producto.precio = precio || producto.precio;
+            producto.fechaEdicion = new Date();
             const updatedProducto = await AppDataSource.getRepository(Productos).save(producto);
             return res.status(200).json({message:updatedProducto});
         }
