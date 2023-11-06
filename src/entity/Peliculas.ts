@@ -14,7 +14,8 @@ export class Peliculas {
     @Column()
     @IsNotEmpty()
     director: string;
-    @Column()
-    @IsOptional()
-    fecha_estreno: Date;
+    @Column({ nullable: true }) // Esto hace que la columna sea opcional en la base de datos.
+    @IsOptional() // Esto le dice a class-validator que el campo es opcional en la validación.
+    fecha_estreno?: Date; // El signo de interrogación indica que la propiedad es opcional en TypeScript.
+    
 }

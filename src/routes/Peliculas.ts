@@ -6,7 +6,7 @@ import { checkJwt } from "../middleware/jwt";
 
 const router = Router();
 checkJwt
-router.post("/" ,checkJwt,PeliculasController.create);
+router.post("/" ,PeliculasController.create);
 router.get("/", checkJwt, PeliculasController.getAll);
 router.get("/:id", checkJwt, PeliculasController.getById);
 router.put("/:id", checkJwt, PeliculasController.edit);

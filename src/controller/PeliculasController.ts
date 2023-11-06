@@ -15,12 +15,12 @@ export class PeliculasController {
             pelicula.director = director;
             pelicula.duracion = duracion;
             pelicula.fecha_estreno = fecha_estreno;
-
             const errors = await validate(pelicula, { validationError: { target: false } });
             if (errors.length > 0) {
-                return res.status(400).json({ message: errors });
+                return res.status(415).json({ message: errors });
             }
-            await AppDataSource.getRepository(Peliculas).save(pelicula);
+            const peli=await AppDataSource.getRepository(Peliculas).save(pelicula);
+            return res.status(201).json({ message: 'Pelicula created',pelis:peli });
         } catch (error) { return res.status(400).json({ message: error.message }) };
     }
 
