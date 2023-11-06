@@ -1,14 +1,15 @@
 import { Router } from "express";
 import { productosController } from "../controller/productosController";
+import { checkJwt } from "../middleware/jwt";
 
 
 
 const router = Router();
-
-router.post("/", productosController.new);
-router.get("/", productosController.get);
-router.get("/:id", productosController.getFilterId);
-router.put("/:id", productosController.edit);
-router.delete("/:id", productosController.delete);
+checkJwt
+router.post("/" ,checkJwt,productosController.new);
+router.get("/" ,checkJwt,productosController.get);
+router.get("/:id", checkJwt ,productosController.getFilterId);
+router.put("/:id", checkJwt ,productosController.edit);
+router.delete("/:id",checkJwt , productosController.delete);
 
 export default router;

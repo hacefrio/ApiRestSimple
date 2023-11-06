@@ -1,11 +1,14 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm"
+import { Entity, PrimaryGeneratedColumn, Column, PrimaryColumnCannotBeNullableError, PrimaryColumn, Unique } from "typeorm"
 import * as bcrypt from "bcryptjs"
 
 @Entity()
-export class User {
+export class Users {
 
     @PrimaryGeneratedColumn()
     id: number
+
+    @Column({ unique: true }) 
+    email: string
 
     @Column()
     firstName: string
@@ -16,8 +19,6 @@ export class User {
     @Column()
     age: number
 
-    @Column()
-    email: string
 
     @Column()
     password: string
@@ -25,8 +26,8 @@ export class User {
     hashPassword() {
         this.password = bcrypt.hashSync(this.password, 8)
     }
-    checkPassword(password: string, passwordHash: string): boolean {
-        return bcrypt.compareSync(password, passwordHash)
+    checkPassword(password: string): boolean {
+        return bcrypt.compareSync(password, this.password)
     }
     
 

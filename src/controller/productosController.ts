@@ -9,7 +9,7 @@ export class productosController{
             const {nombre,precio} = req.body;
             const producto= new Productos();
             //console.log(nombre,precio);
-            if(nombre!=""){
+            if(!nombre){
                 return res.status(400).json({message:"El nombre no puede estar vacio"});
             }else 
             if(precio<=0){
@@ -18,6 +18,7 @@ export class productosController{
                 producto.nombre=nombre;
                 producto.precio=precio;
                 producto.fechaCreacion=new Date();
+                producto.fechaEdicion=new Date()
                 await AppDataSource.getRepository(Productos).save(producto);
                 return res.status(200).json({message:producto});
             }
@@ -67,5 +68,12 @@ export class productosController{
         }
         return res.status(404).json({ message: 'Producto Not Found' });
     }
-    
+    static getById = async (req: Request, res: Response) => {
+        const { id } = req.params;
+        const producto = await AppDataSource.getRepository(Productos).findOneBy({id: parseInt(id)});
+        if (producto) {
+            return res.status(200).json({message:producto});
+        }
+        return res.status(404).json({ message: 'Producto Not Found' });
+    }
 }

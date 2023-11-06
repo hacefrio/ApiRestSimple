@@ -1,7 +1,9 @@
 import "reflect-metadata"
 import { DataSource } from "typeorm"
-import { User } from "./entity/User"
+import { Users } from "./entity/Users"
 import { Productos } from "./entity/Productos"
+import { Peliculas } from "./entity/Peliculas"
+import { Opiniones } from "./entity/Opiniones"
 
 export const AppDataSource = new DataSource({
     type: "mssql",
@@ -11,7 +13,7 @@ export const AppDataSource = new DataSource({
     database: "pruebaRestApi",
     synchronize: true,
     logging: false,
-    entities: [User,Productos],
+    entities: [Users,Productos,Peliculas,Opiniones],
     migrations: [],
     subscribers: [],
     extra: {
